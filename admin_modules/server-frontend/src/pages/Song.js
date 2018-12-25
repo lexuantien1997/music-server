@@ -141,8 +141,13 @@ class Song extends Component {
     this.state = {
       showFormSuccess: false
     };
-    this.submit = this.submit.bind(this);
+    this.submit = this.submit.bind(this);    
     this._renderSuccessMessage = this._renderSuccessMessage.bind(this);
+    this.handleAddSong = this.handleAddSong.bind(this);
+  }
+
+  handleAddSong(event) {
+    event.preventDefault();
   }
 
 
@@ -170,7 +175,7 @@ class Song extends Component {
             Add Song
           </h5>
           <div className={"card-body"}>
-            <Form submit={this.submit}>
+            <form  onSubmit={this.handleAddSong}>
               {/* song name */}
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
@@ -237,39 +242,48 @@ class Song extends Component {
                   </div>
                 </div>
               </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">128</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
+              <div class="row">
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">128</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" />
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">320</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                      <input type="checkbox" aria-label="Checkbox for following text input" />
+                    </div>
+                    </div>
+                  </div> 
+                </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">lossless</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                      <input type="checkbox" aria-label="Checkbox for following text input" />
+                    </div>
+                    </div>
+                  </div> 
+                </div>
               </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">320</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
-                  </div>
-                </div>
-              </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">lossless</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
-                  </div>
-                </div>
-              </div>
+
               {/* Video */}
               <span className="container" >Video</span>
               <div className="input-group mb-3">
@@ -283,48 +297,60 @@ class Song extends Component {
                   </div>
                 </div>
               </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">360</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
+              <div class="row">
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">360</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" />
+                      </div>
+                    </div>
                   </div>
+                </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">480</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                      <input type="checkbox" aria-label="Checkbox for following text input" />
+                    </div>
+                    </div>
+                  </div> 
                 </div>
               </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">480</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
+              <div class="row">
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">720</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">720</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
-                  </div>
-                </div>
-              </div>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">1080</span>
-                </div>
-                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
-                  </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">1080</span>
+                    </div>
+                    <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                      <input type="checkbox" aria-label="Checkbox for following text input" />
+                    </div>
+                    </div>
+                  </div> 
                 </div>
               </div>
 
@@ -341,7 +367,7 @@ class Song extends Component {
                   </button>
                 </div>
               </div>
-            </Form>
+            </form>
           </div>
         </div>
         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
