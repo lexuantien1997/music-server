@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import "./index.css";
 import Select from 'react-select';
-
+import songTypes from "../untils/song.types";
 const colourOptions = [
   { value: 'chocolate', label: 'Chocolate' },
   { value: 'strawberry', label: 'Strawberry' },
@@ -210,7 +210,7 @@ class Song extends Component {
                 <Select
                   isMulti
                   name="colors"
-                  options={colourOptions}
+                  options={songTypes}
                   className="basic-multi-select form-control"
                   classNamePrefix="select"/>
               </div>

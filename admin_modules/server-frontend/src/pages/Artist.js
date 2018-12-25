@@ -1,15 +1,8 @@
 import React, {Component} from "react";
 import "./index.css";
 import Select from 'react-select';
+import countries from "../untils/country";
 
-const colourOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'red', label: 'Red' },
-  { value: 'blue', label: 'Blue' },
-  { value: 'green', label: 'Green' },
-  { value: 'yellow', label: 'Yellow' }
-];
 
 class Form extends React.Component {
 
@@ -213,7 +206,7 @@ class Artist extends Component {
               </div>
 
               <div class="row">
-                <div class="col-3">
+                <div class="col-sm">
                   {/* Gender */}
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -225,7 +218,7 @@ class Artist extends Component {
                     </select>
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm">
                   {/* Date of birth */}
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -234,20 +227,19 @@ class Artist extends Component {
                     <input type="date" value="1990-01-01" className="form-control" aria-describedby="basic-addon3" />
                   </div>
                 </div>
-                <div class="col-sm">
-                  {/* Country */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Country</span>
-                    </div>
-                    <Select
-                      isMulti
-                      name="colors"
-                      options={colourOptions}
-                      className="basic-multi-select form-control"
-                      classNamePrefix="select"/>
-                  </div>
+              </div>
+
+              {/* History */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Country</span>
                 </div>
+                <Select
+                  isMulti
+                  name="colors"
+                  options={countries}
+                  className="basic-multi-select form-control"
+                  classNamePrefix="select"/>
               </div>
                 
               {/* History  */}
