@@ -1,6 +1,15 @@
 import React, {Component} from "react";
 import "./index.css";
+import Select from 'react-select';
 
+const colourOptions = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'red', label: 'Red' },
+  { value: 'blue', label: 'Blue' },
+  { value: 'green', label: 'Green' },
+  { value: 'yellow', label: 'Yellow' }
+];
 
 class Form extends React.Component {
 
@@ -161,64 +170,86 @@ class Artist extends Component {
           </h5>
           <div className={"card-body"}>
             <Form submit={this.submit}>
-              {/* Full name */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Full name</span>
+              <div class="row">
+                <div class="col-sm">
+                  {/* Full name */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Full name</span>
+                    </div>
+                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
+                  </div> 
                 </div>
-                <input type="text" className="form-control" aria-describedby="basic-addon3" />
-              </div>  
-              {/* Nickname */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Nickname</span>
+                <div class="col-sm">
+                  {/* Nickname */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Nickname</span>
+                    </div>
+                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
+                  </div> 
                 </div>
-                <input type="text" className="form-control" aria-describedby="basic-addon3" />
-              </div>  
-              {/* Avatar */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Avatar</span>
-                </div>
-                <input type="text" className="form-control" aria-describedby="basic-addon3" />
-              </div>  
-              {/* Thumbnail */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Thumbnail</span>
-                </div>
-                <input type="text" className="form-control" aria-describedby="basic-addon3" />
-              </div>              
-              {/* Gender */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <label className="input-group-text" for="inputGroupSelect01">Gender</label>
-                </div>
-                <select className="custom-select">
-                  <option selected value="0">Female</option>
-                  <option value="1">Male</option>
-                </select>
               </div>
-              {/* Date of birth */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text" >Date of birth</span>
+
+              <div class="row">
+                <div class="col-sm">
+                  {/* Avatar */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Avatar</span>
+                    </div>
+                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
+                  </div>
                 </div>
-                <input type="date" className="form-control" aria-describedby="basic-addon3" />
-              </div>
-              {/* Country */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <label className="input-group-text" for="inputGroupSelect01">Country</label>
+                <div class="col-sm">
+                  {/* Thumbnail */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Thumbnail</span>
+                    </div>
+                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
+                  </div>         
                 </div>
-                <select className="custom-select">
-                  <option selected value="0">Việt Nam</option>
-                  <option value="1">Mỹ</option>
-                  <option value="2">Anh</option>
-                  <option value="3">Đức</option>
-                  <option value="4">Pháp</option>
-                </select>
               </div>
+
+              <div class="row">
+                <div class="col-3">
+                  {/* Gender */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <label className="input-group-text" for="inputGroupSelect01">Gender</label>
+                    </div>
+                    <select className="custom-select">
+                      <option selected value="0">Female</option>
+                      <option value="1">Male</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  {/* Date of birth */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text" >Date of birth</span>
+                    </div>
+                    <input type="date" value="1990-01-01" className="form-control" aria-describedby="basic-addon3" />
+                  </div>
+                </div>
+                <div class="col-sm">
+                  {/* Country */}
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Country</span>
+                    </div>
+                    <Select
+                      isMulti
+                      name="colors"
+                      options={colourOptions}
+                      className="basic-multi-select form-control"
+                      classNamePrefix="select"/>
+                  </div>
+                </div>
+              </div>
+                
               {/* History  */}
               <div className="input-group">
                 <div className="input-group-prepend">

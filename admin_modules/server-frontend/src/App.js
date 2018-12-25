@@ -24,7 +24,7 @@ class App extends Component {
             <Route
               exact
               path="/"
-              render = { () => <Artist />}
+              render = { () =>  <Redirect to="/add-song" />}
             />
 
             <ul style = {{ padding: 0, margin: 0, position: "absolute", top: 0, height: "40px", width: "100%", display: "flex" }}>

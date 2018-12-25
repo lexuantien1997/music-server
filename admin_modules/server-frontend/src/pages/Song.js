@@ -1,6 +1,15 @@
 import React, {Component} from "react";
 import "./index.css";
+import Select from 'react-select';
 
+const colourOptions = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'red', label: 'Red' },
+  { value: 'blue', label: 'Blue' },
+  { value: 'green', label: 'Green' },
+  { value: 'yellow', label: 'Yellow' }
+];
 
 class Form extends React.Component {
 
@@ -9,6 +18,7 @@ class Form extends React.Component {
     this.state = {
       isValidated: false
     };    
+
     this.validate = this.validate.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
@@ -175,6 +185,42 @@ class Song extends Component {
                 </div>
                 <input type="text" className="form-control" aria-describedby="basic-addon3" />
               </div>  
+
+              {/* array artists */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Artists</span>
+                </div>
+                <Select
+                  isMulti
+                  name="colors"
+                  options={colourOptions}
+                  className="basic-multi-select form-control"
+                  classNamePrefix="select"/>
+              </div>
+
+                {/* array songs type */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Song types</span>
+                </div>
+                <Select
+                  isMulti
+                  name="colors"
+                  options={colourOptions}
+                  className="basic-multi-select form-control"
+                  classNamePrefix="select"/>
+              </div>
+
+              {/* Creation date */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Creation Date</span>
+                </div>
+                <input type="date" value="2018-01-01" className="form-control" aria-describedby="basic-addon3" />
+              </div>
+              
+
               {/* Audio */}
               <span className="container" >Audio</span>
               <div className="input-group mb-3">
@@ -281,15 +327,7 @@ class Song extends Component {
 
               <div className="input-group mb-3" />
 
-              {/* Creation date */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Creation Date</span>
-                </div>
-                <input type="date" className="form-control" aria-describedby="basic-addon3" />
-              </div>
-
-
+              
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
                   <button
