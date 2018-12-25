@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const axios = require("axios");
+// const axios = require("axios");
 
 // let data = {
 //   a: 5,
@@ -16,16 +16,19 @@ const axios = require("axios");
 // download a song
 // router.use('/download',userClientRoute);
 
-// router.post("/update-user",(request,response) => {
-//   let { a, b } = request.body;
+router.post("/update-user",(request,response) => {
+  let { a, b } = request.body;
 
-//   // client
-//   return response.status(200).json(data);
+  // client
+  return response.status(200).json({a,b});
+});
 
-//   return response.json(fdfdfd);
+router.get("/update-user2",(request,response) => {
+  //let { a, b } = request.body;
 
-//   response.send(asdasd)
-// });
+  // client
+  return response.status(200).json({msg: "success 222222"});
+});
 
 // get a song info
 // router.use('/get-source',userClientRoute);
