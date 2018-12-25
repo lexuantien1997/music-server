@@ -197,6 +197,9 @@ class Song extends Component {
                   options={colourOptions}
                   className="basic-multi-select form-control"
                   classNamePrefix="select"/>
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button">Refresh</button>
+                  </div>
               </div>
 
                 {/* array songs type */}
