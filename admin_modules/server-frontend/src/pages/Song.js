@@ -155,58 +155,152 @@ class Song extends Component {
   render() {
     return (
       <div className={"container pt-4"}>
-        <div className={"row justify-content-center"}>
-          <div className={"card"}>
-            <h5 className={"card-header"}>
-              Add Song
-            </h5>
-            <div className={"card-body"}>
-              <Form submit={this.submit}>
-                <div className={"form-group"}>
-                  <label
-                    htmlFor={"email"}
-                    >
-                    Email
-                  </label>
-                  <input
-                    id={"email"}
-                    className={"form-control"}
-                    required={true}
-                    name={"email"}
-                    type={"email"}
-                    />
-                  <div className="invalid-feedback" />
+        <div className={"card"}>
+          <h5 className={"card-header"}>
+            Add Song
+          </h5>
+          <div className={"card-body"}>
+            <Form submit={this.submit}>
+              {/* song name */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Song name</span>
                 </div>
-                <div className={"form-group"}>
-                  <label
-                    htmlFor={"password"}
-                    >
-                    Password
-                  </label>
-                  <input
-                    id={"password"}
-                    className={"form-control"}
-                    required={true}
-                    name={"password"}
-                    type={"password"}
-                    minLength={6}
-                    pattern="(?=.*\d)(?=.*[a-z]).{6,}"
-                    />
-                  <small className="form-text text-muted">Must be at least 6 characters long, contain letters and numbers</small>
-                  <div className="invalid-feedback" />
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>  
+              {/* Thumbnail */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Thumbnail</span>
                 </div>
-                <div className={"row justify-content-md-center"}>
-                  <div className={"col-sm-12"}>
-                    <button
-                      type={"submit"}
-                      className={"btn btn-primary mb-2"}
-                      >
-                      Test submit!
-                    </button>
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>  
+              {/* Audio */}
+              <span className="container" >Audio</span>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Lyric</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
                   </div>
                 </div>
-              </Form>
-            </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">128</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">320</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">lossless</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              {/* Video */}
+              <span className="container" >Video</span>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Lyric</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">360</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">480</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">720</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">1080</span>
+                </div>
+                <input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input type="checkbox" aria-label="Checkbox for following text input" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="input-group mb-3" />
+
+              {/* Creation date */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Creation Date</span>
+                </div>
+                <input type="date" className="form-control" aria-describedby="basic-addon3" />
+              </div>
+
+
+              <div className={"row justify-content-md-center"}>
+                <div className={"col-sm-12"}>
+                  <button
+                    type={"submit"}
+                    className={"btn btn-primary mb-2"}
+                    >
+                    Test submit!
+                  </button>
+                </div>
+              </div>
+            </Form>
           </div>
         </div>
         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}

@@ -155,90 +155,88 @@ class Artist extends Component {
   render() {
     return (
       <div className={"container pt-4"}>
-        <div className={"container"}>
-          <div className={"card"}>
-            <h5 className={"card-header"}>
-              Add Artist
-            </h5>
-            <div className={"card-body"}>
-              <Form submit={this.submit}>
-                {/* Full name */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-addon3">Full name</span>
-                  </div>
-                  <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
-                </div>  
-                {/* Nickname */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-addon3">Nickname</span>
-                  </div>
-                  <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
-                </div>  
-                {/* Avatar */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-addon3">Avatar</span>
-                  </div>
-                  <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
-                </div>  
-                {/* Thumbnail */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-addon3">Thumbnail</span>
-                  </div>
-                  <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
-                </div>              
-                {/* Gender */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <label className="input-group-text" for="inputGroupSelect01">Gender</label>
-                  </div>
-                  <select className="custom-select" id="inputGroupSelect01">
-                    <option selected value="0">Female</option>
-                    <option value="1">Male</option>
-                  </select>
+        <div className={"card"}>
+          <h5 className={"card-header"}>
+            Add Artist
+          </h5>
+          <div className={"card-body"}>
+            <Form submit={this.submit}>
+              {/* Full name */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Full name</span>
                 </div>
-                {/* Date of birth */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-addon3">Date of birth</span>
-                  </div>
-                  <input type="date" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>  
+              {/* Nickname */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Nickname</span>
                 </div>
-                {/* Country */}
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <label className="input-group-text" for="inputGroupSelect01">Country</label>
-                  </div>
-                  <select className="custom-select">
-                    <option selected value="0">Việt Nam</option>
-                    <option value="1">Mỹ</option>
-                    <option value="2">Anh</option>
-                    <option value="3">Đức</option>
-                    <option value="4">Pháp</option>
-                  </select>
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>  
+              {/* Avatar */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Avatar</span>
                 </div>
-                {/* History  */}
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">History</span>
-                  </div>
-                  <textarea className="form-control" rows="5" aria-label="With textarea"></textarea>
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>  
+              {/* Thumbnail */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Thumbnail</span>
                 </div>
-                <div className={"row justify-content-md-center"}>
-                  <div className={"col-sm-12"}>
-                    <button
-                      type={"submit"}
-                      className={"btn btn-primary mb-2"}
-                      >
-                      Test submit!
-                    </button>
-                  </div>
+                <input type="text" className="form-control" aria-describedby="basic-addon3" />
+              </div>              
+              {/* Gender */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text" for="inputGroupSelect01">Gender</label>
                 </div>
-              </Form>
-            </div>
+                <select className="custom-select">
+                  <option selected value="0">Female</option>
+                  <option value="1">Male</option>
+                </select>
+              </div>
+              {/* Date of birth */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" >Date of birth</span>
+                </div>
+                <input type="date" className="form-control" aria-describedby="basic-addon3" />
+              </div>
+              {/* Country */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label className="input-group-text" for="inputGroupSelect01">Country</label>
+                </div>
+                <select className="custom-select">
+                  <option selected value="0">Việt Nam</option>
+                  <option value="1">Mỹ</option>
+                  <option value="2">Anh</option>
+                  <option value="3">Đức</option>
+                  <option value="4">Pháp</option>
+                </select>
+              </div>
+              {/* History  */}
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">History</span>
+                </div>
+                <textarea className="form-control" rows="5" aria-label="With textarea"></textarea>
+              </div>
+              <div className={"row justify-content-md-center"}>
+                <div className={"col-sm-12"}>
+                  <button
+                    type={"submit"}
+                    className={"btn btn-primary mb-2"}
+                    >
+                    Test submit!
+                  </button>
+                </div>
+              </div>
+            </Form>
           </div>
         </div>
         {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
