@@ -39,7 +39,6 @@ app.use(bodyParser.json());
 dotenv.config(); // dotenv to connect environment
 //sseConfig(); 
 mongooseConfig();
-firebaseConfig.initFirebase();
 // ===============================================
 
 

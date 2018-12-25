@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 module.exports = () => {
-  Database config
+  // Database config
     mongoose
         .connect(process.env.MONGO_OFFLINE || process.env.MONGO_ONLINE, { useNewUrlParser: true })
         .then(() => console.log('MongoDB connected successfully'))
