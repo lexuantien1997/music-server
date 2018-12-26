@@ -11,7 +11,7 @@ const VENDOR_LIBS = [
   'react', 
   'react-dom', 
 ];
-
+// https://hackernoon.com/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758
 module.exports = {
   entry: {
     bundle: './src/index.js',

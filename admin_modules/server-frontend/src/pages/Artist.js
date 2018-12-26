@@ -3,6 +3,7 @@ import Select from 'react-select';
 import getCountry from "../connect-server/get.country";
 import "./index.css";
 import addArtist from "../connect-server/add.artist";
+import addArtistZing from "../connect-server/add.artist.zing";
 import isEmpty from "../untils/is-empty.validate";
 
 
@@ -18,11 +19,20 @@ class Artist extends Component {
       gender: '0',
       dob: '1990-01-01',
       country:[],
-      history:null            
+      history:null ,      
+      // 
+      sig:"",
+      ctime:"",
+      api_key:"",
+      urlCountry:"",
+      countryZ:""  
     };
     this.addArtist = this.addArtist.bind(this);
     this.handleInputchange = this.handleInputchange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
+
+    this.handleFetchDataFromZing = this.handleFetchDataFromZing.bind(this); 
+    this.handleSelectZingCountryChange = this.handleSelectZingCountryChange.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +41,58 @@ class Artist extends Component {
         _countries: data
       });
     })
+  }
+
+  handleSelectZingCountryChange(selectedOption) {
+    this.setState({
+      countryZ: selectedOption
+    });
+  }
+  
+  handleFetchDataFromZing(event) {
+    event.preventDefault();
+
+    let {
+      api_key,
+      sig,
+      ctime,
+      urlCountry,
+      countryZ
+    } = this.state;
+
+    if(isEmpty(urlCountry)){
+      alert("url country is required");
+      return;
+    }
+
+    if(isEmpty(sig)){
+      alert("sig is required");
+      return;
+    }
+
+    if(isEmpty(ctime)){
+      alert("ctime is required");
+      return;
+    }
+
+    if(isEmpty(api_key)){
+      alert("country is required");
+      return;
+    }
+
+    if(isEmpty(countryZ)){
+      alert("country is required");
+      return;
+    }
+
+    addArtistZing({
+      api_key,
+      sig,
+      ctime,
+      urlCountry,
+      countryZ
+    });
+    console.log(this.state);
   }
 
   handleSelectChange(selectedOption) {
@@ -97,6 +159,13 @@ class Artist extends Component {
   }
 
   render() {
+    const {
+      // 
+      sig,
+      ctime,
+      api_key,
+      urlCountry
+    } = this.state;
     return (
       <div className={"container pt-4"}>
         <div className={"card"}>
@@ -205,6 +274,79 @@ class Artist extends Component {
             </form>
           </div>
         </div>
+
+        <div className={"card"}>
+          <h5 className={"card-header"}>
+            Add Song by get link Zing
+          </h5>
+          <div className={"card-body"}>
+            <form  onSubmit={this.handleFetchDataFromZing}>
+              {/*  */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Url country</span>
+                </div>
+                <input type="text" name="name" name="urlCountry" value = {urlCountry} onChange = {this.handleInputchange} className="form-control"  />
+              </div>
+              {/*  */}
+              <div class="row">
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">ctime</span>
+                    </div>
+                    <input type="text" name="ctime" value = {ctime} onChange = {this.handleInputchange} className="form-control"/>
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">sig</span>
+                    </div>
+                    <input name="sig" value = {sig} onChange = {this.handleInputchange} type="text" className="form-control" />
+                  </div> 
+                </div>
+                <div class="col-sm">
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">api_key</span>
+                    </div>
+                    <input name="api_key" value = {api_key} onChange = {this.handleInputchange} type="text" className="form-control" />
+                  </div> 
+                </div>
+              </div>
+
+
+              {/* History */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Country *</span>
+                </div>
+                <Select
+                  onChange= {this.handleSelectZingCountryChange}                  
+                  options = {this.state._countries}
+                  name="country"
+                  className="basic-multi-select form-control"
+                  classNamePrefix="select"/>
+              </div>
+
+              {/*  */}
+
+              <div className="input-group mb-3" />
+
+              <div className={"row justify-content-md-center"}>
+                <div className={"col-sm-12"}>
+                  <button type={"submit"} className={"btn btn-primary mb-2"}>
+                    Fetch Song
+                  </button>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+
+
       </div>
     );
   }

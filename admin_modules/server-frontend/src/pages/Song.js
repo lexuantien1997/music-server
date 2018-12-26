@@ -11,7 +11,7 @@ const Option = (props) => {
   return (
     <div className = "row mb-3">
       <div className="col-2">
-        <img width="50" height="50" src={props.data.avatar} />
+        <img width="100" height="100" src={props.data.avatar} />
       </div>
       <div className="col-7">
         <components.Option {...props} />      
@@ -27,6 +27,7 @@ class Song extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // manually
       _songTypes: [],
       _artists:[],
       name:"",
@@ -42,14 +43,19 @@ class Song extends Component {
       video1080:"",
       creationDate:"2018-10-10",
       typeSong: [],
-      artist:[]
+      artist:[],
+      // auto fetch from zing
+      sig: "",
+      ctime:"",
+      api_key:"",
+      urlCountry:""   
     };
 
     this.handleAddSong = this.handleAddSong.bind(this);
     this.handleInputchange = this.handleInputchange.bind(this);
     this.handleSelectArtistChange = this.handleSelectArtistChange.bind(this);
     this.handleSelectSongTypeChange = this.handleSelectSongTypeChange.bind(this);
-
+    //
   }
 
   handleSelectArtistChange(selectedOption) {
@@ -156,13 +162,14 @@ class Song extends Component {
       video1080,
       artists,
       creationDate,
-      typeSong
+      typeSong,
+
     } = this.state;
     return (
       <div className={"container pt-4"}>
         <div className={"card"}>
           <h5 className={"card-header"}>
-            Add Song
+            Add Song Manually
           </h5>
           <div className={"card-body"}>
             <form  onSubmit={this.handleAddSong}>

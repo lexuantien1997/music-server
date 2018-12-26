@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const Types = mongoose.Schema.Types;
+
+
 const SongSchema = new mongoose.Schema({
+  data_id: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -64,7 +70,7 @@ const SongSchema = new mongoose.Schema({
       default: null
     }
   },
-  artists: [Types.ObjectId],
+  artists: [],
   creationDate: {
     type: Number,
     default: Date.now()
@@ -81,14 +87,18 @@ const SongSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  userLike: [Types.ObjectId],
-  typeSong: [Types.ObjectId]
+  userLike: [],
+  typeSong: []
 
 },{collection: 'song'}); // prevent 'song' collection transform to 'songs'
 
 
 
 const ArtistSchema = new mongoose.Schema({
+  data_id: {
+    type: String,
+    required: true
+  },
   fullName: {
     type: String,
     required: false
@@ -115,20 +125,24 @@ const ArtistSchema = new mongoose.Schema({
     required: false
   },
   dob: { // date of birth
-    type: Number,
-    default: 631126800000, // 01/01/1990
+    type: String,
+    default: '01/01/1990', // 01/01/1990
     required: false
   },
-  country: [ Types.ObjectId ],
+  country: [],
   story: {
     type: String,
     required: false
   },
-  songs: [Types.ObjectId]
+  songs: []
   
 },{collection: 'artist'}); // prevent 'song' collection transform to 'songs'
 
 const countrySchema = new mongoose.Schema({
+  data_id: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
   },
@@ -138,6 +152,10 @@ const countrySchema = new mongoose.Schema({
 },{collection: 'country'});
 
 const songTypeSchema = new mongoose.Schema({
+  data_id: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
   },
@@ -171,12 +189,20 @@ const UserSchema = new mongoose.Schema({
   }
 },{collection:'user'})
 
+const SchemaObjId = new mongoose.Schema({
+  artistId: String,
+  songId: String,
+  countryId: String,
+  songTypeId: String,
+  userId: String
+},{collation:'schemaObjId'})
 
 const SongType =  mongoose.model('songType',songTypeSchema);
 const Country =  mongoose.model('country',countrySchema);
 const Artist =  mongoose.model('artist',ArtistSchema);
 const Song =  mongoose.model('song',SongSchema);
 const User = mongoose.model('user', UserSchema);
+const ObjId = mongoose.model('schemaObjId', SchemaObjId);
 
 module.exports = {
   Country,
@@ -184,4 +210,5 @@ module.exports = {
   Song,
   SongType,
   User,
+  ObjId
 };
