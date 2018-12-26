@@ -135,5 +135,37 @@ const Playlist = new mongoose.Schema({
 
 });
 
+const UserSchema = new mongoose.Schema({
+  userName:{
+    type: String,
+    required: true,
+    default: ""
+  },
+  password:{
+    type: String,
+    required: true,
+    default: ""
+  },
+  friends:{
+    type: Array,
+  },
+  listenHistory:{
+    type: Array,
+  },
+  likedMusics:{
+    type: Array,
+  },
+  downloadedMusic:{
+    type: Array,
+  }
+},{collection:'user'})
+
 const Artist =  mongoose.model('artist',ArtistSchema);
 const Song =  mongoose.model('song',SongSchema);
+const User = mongoose.model('user', UserSchema);
+
+module.exports = {
+  Artist,
+  Song,
+  User,
+}
