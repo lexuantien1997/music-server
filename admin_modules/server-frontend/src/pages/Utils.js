@@ -1,123 +1,148 @@
 import React, {Component} from "react";
-import "./index.css";
-import Select from 'react-select';
-import countries from "../untils/country";
-
+import updateCountry from "../connect-server/save.country";
+import addSongType from "../connect-server/save.songType";
 
 class Utils extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: null,
+      songTypeData: null      
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSongSubmit = this.handleSongSubmit.bind(this);
+    this.handleFileSelect = this.handleFileSelect.bind(this);
+    this.handleSongFileSelect = this.handleSongFileSelect.bind(this);
   }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let { data } = this.state;
+    if(data != null) {
+      alert(data);
+      // save to database      
+      updateCountry(JSON.parse(data)).then(success => {  
+         this.setState({data: null}); 
+        if(success) alert("add successfully");
+        else alert("add fail");
+      });
+    } else {
+      alert("Please import json file to upload");
+    }
+  }
+
+  handleSongSubmit(event) {
+    event.preventDefault();
+    let { songTypeData } = this.state;
+    if(songTypeData != null) {
+      alert(songTypeData);
+      // save to database      
+      addSongType(JSON.parse(songTypeData)).then(success => {  
+         this.setState({songTypeData: null}); 
+        if(success) alert("add successfully");
+        else alert("add fail");
+      });
+    } else {
+      alert("Please import json file to upload");
+    }
+  }
+
+  handleFileSelect(evt) {
+    let files = evt.target.files;
+    if (!files.length) {
+      alert('No file select');
+      return;
+    }
+    let file = files[0];
+    let reader = new FileReader();
+    const that = this;
+    reader.onload = function(e) {
+      that.setState({data: e.target.result});
+    };
+    reader.readAsText(file);
+  }
+
+  
+  handleSongFileSelect(evt) {
+    let files = evt.target.files;
+    if (!files.length) {
+      alert('No file select');
+      return;
+    }
+    let file = files[0];
+    let reader = new FileReader();
+    const that = this;
+    reader.onload = function(e) {
+      that.setState({songTypeData: e.target.result});
+    };
+    reader.readAsText(file);
+  }
+
 
   render() {
     return (
-      <div className={"container pt-4"}>
-        <div className={"card"}>
-          <h5 className={"card-header"}>
-            Add Artist
-          </h5>
-          <div className={"card-body"}>
-            <form>
-              <div class="row">
-                <div class="col-sm">
-                  {/* Full name */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Full name</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
-                  </div> 
-                </div>
-                <div class="col-sm">
-                  {/* Nickname */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Nickname</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
-                  </div> 
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-sm">
-                  {/* Avatar */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Avatar</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
+      <div className={"container pt-4"}>        
+        <div className="row">
+        <div className="col-sm">
+          <div className={"card"}>
+            <h5 className={"card-header"}>
+              Add Country
+            </h5>
+            <div className={"card-body"}>
+              <form onSubmit={this.handleSubmit}>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Upload JSON</span>
+                  </div>
+                  <div className="custom-file">
+                    <input type="file" accept=".json" onChange={this.handleFileSelect}  className="custom-file-input" />
+                    <label className="custom-file-label">Choose JSON file</label>
                   </div>
                 </div>
-                <div class="col-sm">
-                  {/* Thumbnail */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Thumbnail</span>
-                    </div>
-                    <input type="text" className="form-control" aria-describedby="basic-addon3" />
-                  </div>         
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-sm">
-                  {/* Gender */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <label className="input-group-text" for="inputGroupSelect01">Gender</label>
-                    </div>
-                    <select className="custom-select">
-                      <option selected value="0">Female</option>
-                      <option value="1">Male</option>
-                    </select>
+                <div className={"row justify-content-md-center"}>
+                  <div className={"col-sm-12"}>
+                    <button type={"submit"} className={"btn btn-primary mb-2"} >
+                      Add
+                    </button>
                   </div>
                 </div>
-                <div class="col-sm">
-                  {/* Date of birth */}
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text" >Date of birth</span>
-                    </div>
-                    <input type="date" value="1990-01-01" className="form-control" aria-describedby="basic-addon3" />
-                  </div>
-                </div>
-              </div>
-
-              {/* History */}
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Country</span>
-                </div>
-                <Select
-                  isMulti
-                  name="colors"
-                  options={countries}
-                  className="basic-multi-select form-control"
-                  classNamePrefix="select"/>
-              </div>
-                
-              {/* History  */}
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">History</span>
-                </div>
-                <textarea className="form-control" rows="5" aria-label="With textarea"></textarea>
-              </div>
-              <div className={"row justify-content-md-center"}>
-                <div className={"col-sm-12"}>
-                  <button
-                    type={"submit"}
-                    className={"btn btn-primary mb-2"}
-                    >
-                    Test submit!
-                  </button>
-                </div>
-              </div>
-            </form>
+                { this.state.data && <p> {this.state.data} </p> }
+                {!this.state.data && <p>Nothing</p>}
+              </form>
+            </div>
           </div>
         </div>
-        {this.state.showFormSuccess ? this._renderSuccessMessage() : null}
+        <div className="col-sm">
+          <div className={"card"}>
+            <h5 className={"card-header"}>
+              Add Song Type
+            </h5>
+            <div className={"card-body"}>
+              <form onSubmit={this.handleSongSubmit}>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Upload JSON</span>
+                  </div>
+                  <div className="custom-file">
+                    <input type="file" accept=".json" onChange={this.handleSongFileSelect}  className="custom-file-input" />
+                    <label className="custom-file-label">Choose JSON file</label>
+                  </div>
+                </div>
+                <div className={"row justify-content-md-center"}>
+                  <div className={"col-sm-12"}>
+                    <button type={"submit"} className={"btn btn-primary mb-2"} >
+                      Add
+                    </button>
+                  </div>
+                </div>
+                { this.state.songTypeData && <p> {this.state.songTypeData} </p> }
+                {!this.state.songTypeData && <p>Nothing</p>}
+              </form>
+            </div>
+          </div>
+          </div>
+        </div>
+
       </div>
     );
   }
