@@ -146,14 +146,42 @@ const songTypeSchema = new mongoose.Schema({
   }
 },{collection: 'songType'});
 
+const UserSchema = new mongoose.Schema({
+  userName:{
+    type: String,
+    required: true,
+    default: ""
+  },
+  password:{
+    type: String,
+    required: true,
+    default: ""
+  },
+  friends:{
+    type: Array,
+  },
+  listenHistory:{
+    type: Array,
+  },
+  likedMusics:{
+    type: Array,
+  },
+  downloadedMusic:{
+    type: Array,
+  }
+},{collection:'user'})
+
+
 const SongType =  mongoose.model('songType',songTypeSchema);
 const Country =  mongoose.model('country',countrySchema);
 const Artist =  mongoose.model('artist',ArtistSchema);
 const Song =  mongoose.model('song',SongSchema);
+const User = mongoose.model('user', UserSchema);
 
 module.exports = {
   Country,
   Artist,
   Song,
-  SongType
+  SongType,
+  User,
 };
