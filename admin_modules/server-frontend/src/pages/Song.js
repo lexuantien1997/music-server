@@ -13,8 +13,11 @@ const Option = (props) => {
       <div className="col-2">
         <img width="50" height="50" src={props.data.avatar} />
       </div>
-      <div className="col-5">
+      <div className="col-7">
         <components.Option {...props} />      
+      </div>
+      <div className="col-2">
+        {props.data.fullName}
       </div>
     </div>
   )

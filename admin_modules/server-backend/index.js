@@ -104,7 +104,7 @@ router.get("/artist/get",(request,response)=>{
     if(!err) {
       let dataArtists = [];
       artists.forEach(element => {
-        dataArtists.push({label: element.nickName, value: element._id, avatar: element.avatar });
+        dataArtists.push({label: element.nickName, value: element._id, avatar: element.avatar,fullName: element.fullName });
       });
       console.log("GET ARTISTS SUCCESS",{ err:  null, msg: 'Success' });
       response.status(200).json({ err: null, msg: 'Success', data: dataArtists});
