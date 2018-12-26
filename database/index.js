@@ -89,7 +89,7 @@ const SongSchema = new mongoose.Schema({
 
 
 const ArtistSchema = new mongoose.Schema({
-  realName: {
+  fullName: {
     type: String,
     required: false
   },
@@ -119,10 +119,7 @@ const ArtistSchema = new mongoose.Schema({
     default: 631126800000, // 01/01/1990
     required: false
   },
-  country: {
-    type: Types.ObjectId,
-    required: false,
-  },
+  country: [ Types.ObjectId ],
   story: {
     type: String,
     required: false
@@ -131,9 +128,32 @@ const ArtistSchema = new mongoose.Schema({
   
 },{collection: 'artist'}); // prevent 'song' collection transform to 'songs'
 
-const Playlist = new mongoose.Schema({
+const countrySchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+  code: {
+    type: String
+  }
+},{collection: 'country'});
 
-});
+const songTypeSchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+  code: {
+    type: String
+  }
+},{collection: 'songType'});
 
+const SongType =  mongoose.model('songType',songTypeSchema);
+const Country =  mongoose.model('country',countrySchema);
 const Artist =  mongoose.model('artist',ArtistSchema);
 const Song =  mongoose.model('song',SongSchema);
+
+module.exports = {
+  Country,
+  Artist,
+  Song,
+  SongType
+};

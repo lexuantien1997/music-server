@@ -10,7 +10,7 @@ import {
 
 import Artist from "./pages/Artist";
 import Song from "./pages/Song";
-
+import Utils from "./pages/Utils";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +38,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/add-artist" render={ () => <Artist />} />
                 <Route exact path="/add-song" render={ () => <Song />} />
+                <Route exact path="/add-utils" render={ () => <Utils />} />
                 <Route render={() => <div>Not Found</div>} />
               </Switch>
             </div>

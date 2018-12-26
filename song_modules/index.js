@@ -16,19 +16,19 @@ const router = express.Router();
 // download a song
 // router.use('/download',userClientRoute);
 
-router.post("/update-user",(request,response) => {
-  let { a, b } = request.body;
+// router.post("/update-user",(request,response) => {
+//   let { a, b } = request.body;
 
-  // client
-  return response.status(200).json({a,b});
-});
+//   // client
+//   return response.status(200).json({a,b});
+// });
 
-router.get("/update-user2",(request,response) => {
-  //let { a, b } = request.body;
+// router.get("/update-user2",(request,response) => {
+//   //let { a, b } = request.body;
 
-  // client
-  return response.status(200).json({msg: "success 222222"});
-});
+//   // client
+//   return response.status(200).json({msg: "success 222222"});
+// });
 
 // get a song info
 // router.use('/get-source',userClientRoute);
