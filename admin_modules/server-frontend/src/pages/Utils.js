@@ -22,7 +22,6 @@ class Utils extends Component {
       alert(data);
       // save to database      
       updateCountry(JSON.parse(data)).then(success => {  
-         this.setState({data: null}); 
         if(success) alert("add successfully");
         else alert("add fail");
       });
@@ -38,7 +37,6 @@ class Utils extends Component {
       alert(songTypeData);
       // save to database      
       addSongType(JSON.parse(songTypeData)).then(success => {  
-         this.setState({songTypeData: null}); 
         if(success) alert("add successfully");
         else alert("add fail");
       });

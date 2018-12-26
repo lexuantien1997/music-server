@@ -1,0 +1,20 @@
+[
+  {"name": "Nhạc trẻ", "code": "Nhạc trẻ"},
+  {"name": "Trữ tình", "code": "Trữ tình"},
+  {"name": "Pop", "code": "Pop"},
+  {"name": "Thiếu nhi", "code": "Thiếu nhi"},
+  {"name": "Rap", "code": "Rap"},
+  {"name": "Rock", "code": "Rock"},
+  {"name": "R&B", "code": "R&B"},
+  {"name": "Nhạc Việt", "code": "Nhạc Việt"},
+  {"name": "Nhạc Nhật", "code": "Nhạc Việt"},
+  {"name": "Nhạc Hàn", "code": "Nhạc Việt"},
+  {"name": "Nhạc Âu Mỹ", "code": "Nhạc Âu Mỹ"},
+  {"name": "Không lời", "code": "Không lời"},
+  {"name": "Bolero", "code": "Bolero"},
+  {"name": "Nhạc sàn", "code": "Nhạc sàn"},
+  {"name": "Piano", "code": "Piano"},
+  {"name": "Acoustic", "code": "Acoustic"},
+  {"name": "Cải lương", "code": "Cải lương"},
+  {"name": "Hòa tấu", "code": "Hòa tấu"}
+]

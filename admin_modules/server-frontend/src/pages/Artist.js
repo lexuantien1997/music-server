@@ -1,17 +1,16 @@
 import React, {Component} from "react";
-import AsyncSelect from 'react-select/lib/Async';
+import Select from 'react-select';
 import getCountry from "../connect-server/get.country";
 import "./index.css";
 import addArtist from "../connect-server/add.artist";
 import isEmpty from "../untils/is-empty.validate";
-const getCountryData = (inputValue, callback) => {
-  getCountry().then(_countries => callback(_countries));
-}
+
 
 class Artist extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      _countries: [],
       fullName: null,
       nickName:null,
       avatar:"",
@@ -26,8 +25,15 @@ class Artist extends Component {
     this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
+  componentDidMount() {
+    getCountry().then(data => {
+      this.setState({
+        _countries: data
+      });
+    })
+  }
+
   handleSelectChange(selectedOption) {
-    console.log(selectedOption);
     this.setState({
       country: selectedOption
     });    
@@ -85,10 +91,8 @@ class Artist extends Component {
       dob,
       country,
       history
-    });
+    })
       
-
-
     console.log(this.state);
   }
 
@@ -106,7 +110,7 @@ class Artist extends Component {
                   {/* Full name */}
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text">Full name</span>
+                      <span className="input-group-text">Full name *</span>
                     </div>
                     <input type="text"  value={this.state.fullName} name="fullName" onChange={this.handleInputchange} className="form-control" aria-describedby="basic-addon3" />
                   </div> 
@@ -160,7 +164,7 @@ class Artist extends Component {
                   {/* Date of birth */}
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text" >Date of birth</span>
+                      <span className="input-group-text" >Birthday *</span>
                     </div>
                     <input type="date" name="dob" onChange={this.handleInputchange} value={this.state.dob}  className="form-control" aria-describedby="basic-addon3" />
                   </div>
@@ -170,17 +174,13 @@ class Artist extends Component {
               {/* History */}
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
-                  <span className="input-group-text">Country</span>
+                  <span className="input-group-text">Country *</span>
                 </div>
-                <AsyncSelect
+                <Select
                   onChange= {this.handleSelectChange}                  
                   isMulti
-                  loadOptions={getCountryData}
-                  defaultOptions
-                  cacheOptions
-                  isSearchable
+                  options = {this.state._countries}
                   name="country"
-                  // defaultOptions
                   className="basic-multi-select form-control"
                   classNamePrefix="select"/>
               </div>
@@ -188,10 +188,13 @@ class Artist extends Component {
               {/* History  */}
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text">History</span>
+                  <span className="input-group-text">History *</span>
                 </div>
                 <textarea name="history" value={this.state.history} onChange={this.handleInputchange} className="form-control" rows="5" aria-label="With textarea"></textarea>
               </div>
+
+              <div className="input-group mb-3" />
+
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
                   <button type={"submit"} className={"btn btn-primary mb-2"} >
