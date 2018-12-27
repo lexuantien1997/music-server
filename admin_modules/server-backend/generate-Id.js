@@ -41,7 +41,7 @@ module.exports = (prevObjId) => {
 
   console.log(realNumLength, currNumLength, icrNumLength,(parseInt(number[0]) + 1).pad(realNumLength));
 
-  if((icrNumLength == currNumLength) || (icrNumLength > currNumLength && icrNumLength < realNumLength) ) {
+  if((icrNumLength == currNumLength) || (icrNumLength > currNumLength && icrNumLength <= realNumLength) ) {
     return prevObjId.replace(number[0],(parseInt(number[0]) + 1).pad(realNumLength));
   } else if(icrNumLength > realNumLength) {
     let string = regexString.exec(prevObjId)[0];

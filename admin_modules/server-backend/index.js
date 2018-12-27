@@ -3,9 +3,9 @@ const router = express.Router();
 
 // 
 const addArtist = require("./artist/add.artist");
-const addCountry = require("./country/add.country");
+const { addCountry } = require("./country/add.country");
 const addSong = require("./song/add.song");
-const addSongType = require("./songType/add.songType");
+const { addSongType } = require("./songType/add.songType");
 const getArtist = require("./artist/get.artist");
 const addArtistZing = require("./artist/add.artist.zing");
 const getCountry = require("./country/get.country");

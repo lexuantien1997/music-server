@@ -18,9 +18,7 @@ module.exports = (request, response) => {
 
   let countryId = [];
 
-  country.forEach(element => {
-    countryId.push(element.value);
-  });  
+  country.forEach(element => countryId.push(element.value));  
 
   let newArtist;
 
@@ -50,7 +48,5 @@ module.exports = (request, response) => {
         response.status(200).json({err:null, msg: "Success",  data: { noti: ["Add artist successfully"]}});
       } 
     });
-
-    
   });
 }

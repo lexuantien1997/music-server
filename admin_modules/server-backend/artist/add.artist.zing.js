@@ -4,10 +4,10 @@ const axios = require("axios");
 
 const generateObjId = require("../generate-Id");
 
-const getArtistItem = (url,countryId,data_id,index) => {
+const getArtistItem = async (url,countryId,data_id) => {
   axios
   .get(url)
-  .then(response => {
+  .then( async response => {
     let { name, cover, thumbnail, birthday, realname, biography } = response.data.data;
 
     let newArtist =  new Artist({
@@ -22,11 +22,11 @@ const getArtistItem = (url,countryId,data_id,index) => {
       songs:[]
     });
 
-    newArtist.save( err => {
+    await newArtist.save( err => {
       if(err) {
         console.log("ADD ARTIST FORM ZING FAIL",{err:`save ${name} fail - ${err}`, msg: "Fail"});
       } else {
-        console.log("ADD ARTIST FORM ZING SUCCESS",{err:`save index: ${index} id ${data_id} name: ${name} success - ${err}`, msg: "Success"});
+        console.log("ADD ARTIST FORM ZING SUCCESS",{err:`save id ${data_id} name: ${name} success - ${err}`, msg: "Success"});
       }
     });
   });
@@ -34,7 +34,8 @@ const getArtistItem = (url,countryId,data_id,index) => {
 };
 
 
-module.exports =  (request, _response) => {
+
+module.exports = async (request, _response) => {
   let {
     urlCountry,
     api_key,
@@ -46,15 +47,17 @@ module.exports =  (request, _response) => {
   axios.get(urlCountry).then(response=>{
     let { items } = response.data.data;
     // get current artist data_id:
-    ObjId.find({},(err,data) => {
+    ObjId.find({}, async (err,data) => {
       console.log(data);
       let data_id = data[0].artistId;
-      items.forEach((element,index) => {
+
+      for (let element of items) {
         let {link} = element;
         data_id  = generateObjId(data_id);
         link = link.replace("/nghe-si/","");
-        getArtistItem(`https://beta.mp3.zing.vn/api/artist/get-detail?alias=${link}&ctime=${ctime}&sig=${sig}&api_key=${api_key}`,countryZ.value,data_id,index)      
-      });
+        await getArtistItem(`https://beta.mp3.zing.vn/api/artist/get-detail?alias=${link}&ctime=${ctime}&sig=${sig}&api_key=${api_key}`,countryZ.value,data_id);      
+      };
+
       data[0].set({ artistId:data_id });
       data[0].save((err, updateddata) => console.log(updateddata));
     });      
