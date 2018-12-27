@@ -43,6 +43,47 @@ const SongSchema = new mongoose.Schema({
       default: null
     }
   },
+  artists: [],
+  creationDate: {
+    type: Number,
+    default: Date.now()
+  },
+  viewCount: {
+    type: Number,
+    default: 0
+  },
+  likeCount: {
+    type: Number,
+    default: 0
+  },
+  downloadCount: {
+    type: Number,
+    default: 0
+  },
+  userLike: [],
+  typeSong: []
+
+},{collection: 'song'}); // prevent 'song' collection transform to 'songs'
+
+const videoSchema = new mongoose.Schema({
+  data_id: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  idUserUpload: {
+    type: Types.ObjectId,
+    required: false,
+    default: null
+  },
+  thumbnail: {
+    type: String,
+    required: false,
+    default: "http://static-zmp3.zadn.vn/skins/zmp3-v5.1/images/default2/1190x350.jpg"
+  },
   video: {
     _360: {
       type: String,
@@ -90,8 +131,7 @@ const SongSchema = new mongoose.Schema({
   userLike: [],
   typeSong: []
 
-},{collection: 'song'}); // prevent 'song' collection transform to 'songs'
-
+},{collection: 'video'}); // prevent 'song' collection transform to 'songs'
 
 
 const ArtistSchema = new mongoose.Schema({
@@ -201,6 +241,7 @@ const SongType =  mongoose.model('songType',songTypeSchema);
 const Country =  mongoose.model('country',countrySchema);
 const Artist =  mongoose.model('artist',ArtistSchema);
 const Song =  mongoose.model('song',SongSchema);
+const Video =  mongoose.model('video',videoSchema);
 const User = mongoose.model('user', UserSchema);
 const ObjId = mongoose.model('schemaObjId', SchemaObjId);
 
@@ -210,5 +251,6 @@ module.exports = {
   Song,
   SongType,
   User,
-  ObjId
+  ObjId,
+  Video
 };

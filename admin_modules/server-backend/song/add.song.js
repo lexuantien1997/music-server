@@ -6,7 +6,6 @@ module.exports = (request, response) => {
     name,
     thumbnail,
     audio,
-    video,
     creationDate,
     typeSong,
     artist
@@ -29,13 +28,6 @@ module.exports = (request, response) => {
       newSong = new Song({
         data_id,
         name,
-        video: {
-          _360: video[1] ,
-          _480: video[2] ,    
-          _720: video[3] ,
-          _1080: video[4] ,
-          lyric: video[0]
-        },
         audio: {
           _128: audio[1],
           _320: audio[2],    
@@ -52,13 +44,6 @@ module.exports = (request, response) => {
         data_id,
         name,
         thumbnail,
-        video: {
-          _360: video[1] ,
-          _480: video[2] ,    
-          _720: video[3] ,
-          _1080: video[4] ,
-          lyric: video[0]
-        },
         audio: {
           _128: audio[1],
           _320: audio[2],    

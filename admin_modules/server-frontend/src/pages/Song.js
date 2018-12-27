@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./index.css";
 import Select, { components } from 'react-select';
 import getSongType from "../connect-server/get.songType";
+import addSongZing from "../connect-server/add.song.zing";
 import getArtist from "../connect-server/get.artist";
 import addSong from "../connect-server/add.song";
 import isEmpty from "../untils/is-empty.validate";
@@ -36,11 +37,6 @@ class Song extends Component {
       audio128:"",
       audio320:"",
       audioLossless:"",
-      videoLyric:"",
-      video360:"",
-      video480:"",
-      video720:"",
-      video1080:"",
       creationDate:"2018-10-10",
       typeSong: [],
       artist:[],
@@ -48,7 +44,9 @@ class Song extends Component {
       sig: "",
       ctime:"",
       api_key:"",
-      urlCountry:""   
+      urlCountry:"" ,
+      artistUrl:"", // beta url
+      count: 1  
     };
 
     this.handleAddSong = this.handleAddSong.bind(this);
@@ -56,6 +54,25 @@ class Song extends Component {
     this.handleSelectArtistChange = this.handleSelectArtistChange.bind(this);
     this.handleSelectSongTypeChange = this.handleSelectSongTypeChange.bind(this);
     //
+    this.handleFetchDataFromZing = this.handleFetchDataFromZing.bind(this); 
+  }
+
+  handleFetchDataFromZing(event) {
+    event.preventDefault();
+    let {
+      artistUrl, // beta url
+      count
+    } = this.state;
+
+    if(isEmpty(artistUrl)) {
+      alert("artistUrl is require");
+      return;
+    }
+
+    addSongZing({
+      artistUrl, // beta url
+      count
+    })
   }
 
   handleSelectArtistChange(selectedOption) {
@@ -86,11 +103,6 @@ class Song extends Component {
       audio128,
       audio320,
       audioLossless,
-      videoLyric,
-      video360,
-      video480,
-      video720,
-      video1080,
       creationDate,
       typeSong,
       artist
@@ -155,15 +167,11 @@ class Song extends Component {
       audio128,
       audio320,
       audioLossless,
-      videoLyric,
-      video360,
-      video480,
-      video720,
-      video1080,
       artists,
       creationDate,
       typeSong,
-
+      artistUrl, // beta url
+      count
     } = this.state;
     return (
       <div className={"container pt-4"}>
@@ -286,92 +294,57 @@ class Song extends Component {
                 </div>
               </div>
 
-              {/* Video */}
-              <span className="container" >Video</span>
-              <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">Lyric</span>
-                </div>
-                <input value = {videoLyric} name="videoLyric" onChange = {this.handleInputchange} type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <input checked = {!isEmpty(videoLyric)} disabled type="checkbox" aria-label="Checkbox for following text input" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm">
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">360</span>
-                    </div>
-                    <input value = {video360} name="video360" onChange = {this.handleInputchange} type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <input type="checkbox" checked = {!isEmpty(video360)} disabled/>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">480</span>
-                    </div>
-                    <input value = {video480} name="video480" onChange = {this.handleInputchange} type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                      <input checked = {!isEmpty(video480)} disabled type="checkbox" aria-label="Checkbox for following text input" />
-                    </div>
-                    </div>
-                  </div> 
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm">
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">720</span>
-                    </div>
-                    <input value = {video720} name="video720" onChange = {this.handleInputchange} type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <input checked = {!isEmpty(video720)} disabled type="checkbox" aria-label="Checkbox for following text input" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm">
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">1080</span>
-                    </div>
-                    <input value = {video1080} name="video1080" onChange = {this.handleInputchange} type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                      <input type="checkbox" checked = {!isEmpty(video1080)} disabled aria-label="Checkbox for following text input" />
-                    </div>
-                    </div>
-                  </div> 
-                </div>
-              </div>
-
               <div className="input-group mb-3" />
 
-              
               <div className={"row justify-content-md-center"}>
                 <div className={"col-sm-12"}>
                   <button
                     type={"submit"}
                     className={"btn btn-primary mb-2"}
                     >
-                    Test submit!
+                    Add song!
                   </button>
                 </div>
               </div>
             </form>
           </div>
         </div>
+
+        <div className={"card"}>
+          <h5 className={"card-header"}>
+            Add song through ZING
+          </h5>
+          <div className={"card-body"}>
+            <form  onSubmit={this.handleFetchDataFromZing}>
+              {/*  */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Beta mp3</span>
+                </div>
+                <input type="text" name="artistUrl" value = {artistUrl} onChange = {this.handleInputchange} className="form-control"  />
+              </div>
+              {/*  */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Count</span>
+                </div>
+                <input type="text" name="count" value = {count} onChange = {this.handleInputchange} className="form-control"  />
+              </div>
+              {/*  */}
+              <div className="input-group mb-3" />
+
+              <div className={"row justify-content-md-center"}>
+                <div className={"col-sm-12"}>
+                  <button type={"submit"} className={"btn btn-primary mb-2"}>
+                    Fetch Song
+                  </button>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+
       </div>
     );
   }

@@ -5,6 +5,7 @@ const router = express.Router();
 const addArtist = require("./artist/add.artist");
 const { addCountry } = require("./country/add.country");
 const addSong = require("./song/add.song");
+const addSongZing = require("./song/add.song.zing");
 const { addSongType } = require("./songType/add.songType");
 const getArtist = require("./artist/get.artist");
 const addArtistZing = require("./artist/add.artist.zing");
@@ -51,6 +52,10 @@ router.get("/artist/get",(request,response)=>{
 
 router.post("/song/add",(request,response) => {
   addSong(request,response);
+});
+
+router.post("/song/add-zing",(request,response) => {
+  addSongZing(request,response);
 });
 
 router.post("/artist/add",(request,response) => {

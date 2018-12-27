@@ -25,7 +25,8 @@ class Artist extends Component {
       ctime:"",
       api_key:"",
       urlCountry:"",
-      countryZ:""  
+      countryZ:"",
+      count:0  
     };
     this.addArtist = this.addArtist.bind(this);
     this.handleInputchange = this.handleInputchange.bind(this);
@@ -57,7 +58,8 @@ class Artist extends Component {
       sig,
       ctime,
       urlCountry,
-      countryZ
+      countryZ,
+      count
     } = this.state;
 
     if(isEmpty(urlCountry)){
@@ -90,7 +92,8 @@ class Artist extends Component {
       sig,
       ctime,
       urlCountry,
-      countryZ
+      countryZ,
+      count
     });
     console.log(this.state);
   }
@@ -122,7 +125,7 @@ class Artist extends Component {
       gender,
       dob,
       country,
-      history          
+      history       
     } = this.state;
 
     if(isEmpty(fullName)) {
@@ -164,7 +167,8 @@ class Artist extends Component {
       sig,
       ctime,
       api_key,
-      urlCountry
+      urlCountry,
+      count
     } = this.state;
     return (
       <div className={"container pt-4"}>
@@ -277,7 +281,7 @@ class Artist extends Component {
 
         <div className={"card"}>
           <h5 className={"card-header"}>
-            Add Song by get link Zing
+            Add artist through ZING
           </h5>
           <div className={"card-body"}>
             <form  onSubmit={this.handleFetchDataFromZing}>
@@ -287,6 +291,13 @@ class Artist extends Component {
                   <span className="input-group-text">Url country</span>
                 </div>
                 <input type="text" name="name" name="urlCountry" value = {urlCountry} onChange = {this.handleInputchange} className="form-control"  />
+              </div>
+              {/*  */}
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Count</span>
+                </div>
+                <input type="text" name="name" name="count" value = {count} onChange = {this.handleInputchange} className="form-control"  />
               </div>
               {/*  */}
               <div class="row">
