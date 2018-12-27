@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Database = require("../database")
+const genareteId = require("../admin_modules/server-backend/generate-Id")
 
 // const axios = require("axios");
 
@@ -18,8 +19,18 @@ const Database = require("../database")
 // router.use('/download',userClientRoute);
 
 router.post("/sign-up", (request, response) => {
+  let id = 'US0001'
+  Database.User.find({}, function(err, users){
+    if(err){
+      console.log("Failed to get all users")
+    }
+    else{
+      id = users[users.length - 1].userId
+    }
+  })
   let { uName, pass } = request.body;
   let user = new Database.User({
+    userId: genareteId(id),
     userName: uName,
     password: pass,
   })
@@ -245,6 +256,97 @@ router.post("/user-delete-downloaded-music", (request, response) => {
   })
 })
 
+router.post("/user-follow", (request, response) => {
+  let {uName, uNameFollow} = request.body
+  Database.User.findOne({uName: uName}, function(err, user){
+    if (err){
+      console.log("Cannot find user: " + uName)
+      return response.status(200).json({ err: '1', msg: "Cannot find user: " + uName});
+    }
+    else{
+      user.follower.push(uNameFollow)
+      user.save(function(err){
+        if(err){
+          console.log("Failed to follow: " + uNameFollow)
+          return response.status(200).json({ err: '1', msg: "Failed to follow: " + uNameFollow});
+        }
+        else{
+          console.log("Successfully followed: " + uNameFollow)
+          return response.status(200).json({ err: '0', msg: "Successfully followed: " + uNameFollow});
+        }
+      })
+    }
+  })
+})
+
+router.post("/user-unfollow", (request, response) => {
+  let {uName, uNameFollow} = request.body
+  Database.User.findOne({uName: uName}, function(err, user){
+    if (err){
+      console.log("Cannot find user: " + uName)
+      return response.status(200).json({ err: '1', msg: "Cannot find user: " + uName});
+    }
+    else{
+      user.follower.remove(uNameFollow)
+      user.save(function(err){
+        if(err){
+          console.log("Failed to unfollow: " + uNameFollow)
+          return response.status(200).json({ err: '1', msg: "Failed to unfollow: " + uNameFollow});
+        }
+        else{
+          console.log("Successfully followed: " + uNameFollow)
+          return response.status(200).json({ err: '0', msg: "Successfully unfollowed: " + uNameFollow});
+        }
+      })
+    }
+  })
+})
+
+router.post("/user-following", (request, response) => {
+  let {uName, uNameFollow} = request.body
+  Database.User.findOne({uName: uName}, function(err, user){
+    if (err){
+      console.log("Cannot find user: " + uName)
+      return response.status(200).json({ err: '1', msg: "Cannot find user: " + uName});
+    }
+    else{
+      user.following.push(uNameFollow)
+      user.save(function(err){
+        if(err){
+          console.log("Failed to follow: " + uNameFollow)
+          return response.status(200).json({ err: '1', msg: "Failed to follow: " + uNameFollow});
+        }
+        else{
+          console.log("Successfully followed: " + uNameFollow)
+          return response.status(200).json({ err: '0', msg: "Successfully followed: " + uNameFollow});
+        }
+      })
+    }
+  })
+})
+
+router.post("/user-unfollowing", (request, response) => {
+  let {uName, uNameFollow} = request.body
+  Database.User.findOne({uName: uName}, function(err, user){
+    if (err){
+      console.log("Cannot find user: " + uName)
+      return response.status(200).json({ err: '1', msg: "Cannot find user: " + uName});
+    }
+    else{
+      user.following.remove(uNameFollow)
+      user.save(function(err){
+        if(err){
+          console.log("Failed to follow: " + uNameFollow)
+          return response.status(200).json({ err: '1', msg: "Failed to follow: " + uNameFollow});
+        }
+        else{
+          console.log("Successfully followed: " + uNameFollow)
+          return response.status(200).json({ err: '0', msg: "Successfully followed: " + uNameFollow});
+        }
+      })
+    }
+  })
+})
 
 // get a song info
 // router.use('/get-source',userClientRoute);

@@ -205,6 +205,11 @@ const songTypeSchema = new mongoose.Schema({
 },{collection: 'songType'});
 
 const UserSchema = new mongoose.Schema({
+  userId:{
+    type: String,
+    required: true,
+    default: "",
+  },
   userName:{
     type: String,
     required: true,
@@ -225,6 +230,12 @@ const UserSchema = new mongoose.Schema({
     type: Array,
   },
   downloadedMusic:{
+    type: Array,
+  },
+  follower:{
+    type: Array,
+  },
+  following:{
     type: Array,
   }
 },{collection:'user'})
