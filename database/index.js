@@ -43,7 +43,6 @@ const SongSchema = new mongoose.Schema({
       default: null
     }
   },
-  artists: [],
   creationDate: {
     type: Number,
     default: Date.now()
@@ -52,14 +51,8 @@ const SongSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  likeCount: {
-    type: Number,
-    default: 0
-  },
-  downloadCount: {
-    type: Number,
-    default: 0
-  },
+  artists: [],
+  download :[],
   userLike: [],
   typeSong: []
 

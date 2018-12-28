@@ -312,7 +312,20 @@ class Song extends Component {
 
         <div className={"card"}>
           <h5 className={"card-header"}>
-            Add song through ZING
+            Add specify song
+          </h5>
+          <div className={"card-body"}>
+            <form  onSubmit={this.handleFetchDataFromZing}>
+              
+              <div className="input-group mb-3" />
+              
+            </form>
+          </div>
+        </div>
+
+        <div className={"card"}>
+          <h5 className={"card-header"}>
+            Add all song ZING by artist
           </h5>
           <div className={"card-body"}>
             <form  onSubmit={this.handleFetchDataFromZing}>
