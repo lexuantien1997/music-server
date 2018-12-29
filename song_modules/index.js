@@ -18,14 +18,21 @@ const genareteId = require("../admin_modules/server-backend/generate-Id")
 // download a song
 // router.use('/download',userClientRoute);
 
-router.post("/sign-up", (request, response) => {
-  let id = 'US0001'
+router.post("/user-sign-up", (request, response) => {
+  let id = 'US0000'
   Database.User.find({}, function(err, users){
+    console.log("start find all")
     if(err){
       console.log("Failed to get all users")
     }
     else{
-      id = users[users.length - 1].userId
+      console.log(users)
+      console.log(users == [])
+      console.log(users === [])
+      if(users.length != 0){
+        id = users[users.length - 1].userId
+        console.log("get lastest id: " + id)
+      }
     }
   })
   let { uName, pass } = request.body;
@@ -38,7 +45,10 @@ router.post("/sign-up", (request, response) => {
     console.log("asdasdasd")
     if (err) {
       console.log(err)
-      console.log("Create account: " + user)
+    }
+    else {
+      if (data == null){
+        console.log("Create account: " + user)
       Database.User.create(user, function (err) {
         if (err) {
           console.log("save error")
@@ -46,11 +56,12 @@ router.post("/sign-up", (request, response) => {
         }
         return response.status(200).json({ err: '0', msg: "Account successfully created" }); //err_code == 0 means none error
       });
-    }
-    else {
-      console.log(data)
-      console.log("Account exists")
-      return response.status(200).json({ err: '1', msg: "Account already exists", acc: data });
+      }
+      else{
+        console.log(data)
+        console.log("Account exists")
+        return response.status(200).json({ err: '1', msg: "Account already exists", acc: data });
+      }
     }
   })
 })

@@ -6,7 +6,12 @@ dotenv.config();
 module.exports = () => {
   // Database config
     mongoose
-        .connect(process.env.MONGO_OFFLINE || process.env.MONGO_ONLINE, { useNewUrlParser: true })
-        .then(() => console.log('MongoDB connected successfully'))
-        .catch(err => console.log(err));
+        .connect(process.env.MONGO_ONLINE, { useNewUrlParser: true }, function(err){
+          if(err){
+            console.log(err)
+          }
+          else{
+            console.log("Successfully connected to mlab")
+          }
+        }) //process.env.MONGO_OFFLINE ||
   }
