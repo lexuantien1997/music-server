@@ -47,7 +47,6 @@ const SongSchema = new mongoose.Schema({
     type: Number,
     default: Date.now()
   },
-  
   duration: {
     type: Number,
     default: 0,
@@ -185,7 +184,7 @@ const ArtistSchema = new mongoose.Schema({
     required: false
   },
   songs: [],
-  follower: [],
+  follower: [], // { user_id - name - avatar }
   followCount: {
     type: Number,
     required: false,
@@ -265,7 +264,7 @@ const UserSchema = new mongoose.Schema({
     type: Array,
   },
   follower:{
-    type: Array,
+    type: Array, 
   },
   following:{
     type: Array,

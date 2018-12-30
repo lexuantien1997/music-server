@@ -1,5 +1,17 @@
 const { Song }= require("../database");
 const  decryptAlias = require('./decrypt.alias');
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const checkUserLike = async (data, userId) => {
+  if(userId == null) return data;
+  for(let r of data) {
+    let checkLike = await Song.findOne({data_id: r.data_id,userLike: { $in: [userId] }});
+    if(checkLike != null) r.userLike.push(userId);
+  }
+  return data;
+}
+
 
 // this is search for song:
 // http://localhost:5000/search/q=c&media?cAt=12-12-2018&cType=0&vCount=38960381&vType=1
@@ -11,12 +23,28 @@ module.exports = (req,res) => {
     lCount, lType, // like count and type: 0:less | 1: equal | 2: greater
     dCount, dType, // download count and type: 0:less | 1: equal | 2: greater
     duration, // short[0]: < 2 | medium[1]: 2-10 | long[2]: 10-30 | epic[3]: >30 | null: everything ==> later
-    tag // array of type song
+    tag, // array of type song,
+    t2m_id,
+    page
   }  = req.query;
 
   console.log("media search query",req.query);
+  
+  
+  // this is jwt token
+  // so we need decrypt to get payload (data)
+  if(t2m_id == null) { // not login
+
+  } else { // login -> jwt to decrypt response something like follow, search
+    t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN);
+  }
+  
+
   if(q == null) q = "";
 
+  if(page == null) page = 0;
+  else page *= 7;
+  
   let cAtCond = { $nin: [] }; // match every thing mot inside this
   if(cAt != null && cType != null) {
     cAt = (new Date(cAt)).getTime();
@@ -102,10 +130,16 @@ module.exports = (req,res) => {
     downloadCount: dCountCond,
     duration: durationCond,
     typeSong: tagCond
-  }).then(data => res.status(200).json({
-    err: null,
-    msg: "Success",
-    count: data.length,
-    data
-  }));
+  },
+  {
+    userLike: {
+      $slice: 0
+    }
+  })
+  .select("-idUserUpload -audio -download -duration")
+  .sort({data_id:-1}) // sort from newest 2 oldest
+  .skip(page) // skip some data -> pagination
+  .limit(7)
+  .then(data => checkUserLike(data,t2m_id.userId))
+  .then(data => res.status(200).json({ err: null,msg: "Success",count: data.length, data }));
 }

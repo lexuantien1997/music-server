@@ -1,4 +1,20 @@
 const { Artist }= require("../database");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const checkUserFollow = async (data, userId) => {
+  if(userId == null) return data;
+  for(let r of data) {
+    let checkFollow = await Artist.findOne({data_id: r.data_id,"follower.user_id": { $in: [userId] }});
+    if(checkFollow != null) {      
+      let follower = r.follower;
+      let count = 0;
+      for (let i = 0;  i< follower.length && follower[i].user_id != userId; i++) count ++;
+      if(count == follower.length) r.follower.push({ user_id: userId });
+    }    
+  }
+  return data;
+}
 
 // this is search for artist:
 module.exports = (req,res) => {
@@ -9,12 +25,25 @@ module.exports = (req,res) => {
     country, // array country
     dob,dType, // date of birth and type: 0:less | 1: equal | 2: greater
     fCount, fType, // follow count and type: 0:less | 1: equal | 2: greater
+    t2m_id,
+    page
   }  = req.query;
+
+  // this is jwt token
+  // so we need decrypt to get payload (data)
+  if(t2m_id == null) { // not login
+
+  } else { // login -> jwt to decrypt response something like follow, search
+    t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN);
+  }
 
   console.log("artist search query",req.query);
   if(q == null) q = "";
 
   if(fname == null) fname = "";
+
+  if(page == null) page = 0;
+  else page *= 7;
 
   if(gender == null || gender != 1 || gender != 0) gender = { $nin: [] }
 
@@ -63,10 +92,18 @@ module.exports = (req,res) => {
     gender,
     country: countryCond,
     followCount: fCountCond
-  }).then(data => res.status(200).json({
-    err: null,
-    msg: "Success",
-    count: data.length,
-    data
-  }));
+  }, {
+    follower: { // just get 4 user follow
+      $slice: 4
+    },
+    songs: {
+      $slice: 3 // get example 3 song (id and name)
+    }    
+  })
+  .select("-gender -fullName -dob -avatar -_id -story") // exclude song, _id, follower => get all field
+  .sort({data_id:-1}) // sort from newest 2 oldest
+  .skip(page) // skip some data -> pagination
+  .limit(7) // only get 7 data
+  .then(data => checkUserFollow(data,t2m_id.userId)) // add user follow -> last items of follow is user
+  .then(data => res.status(200).json({ err: null,msg: "Success", count: data.length,data})); // response data
 }
