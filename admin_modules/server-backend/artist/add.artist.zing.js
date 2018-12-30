@@ -4,21 +4,36 @@ const axios = require("axios");
 
 const generateObjId = require("../generate-Id");
 
+const randomDate =  () => {
+  return  Math.floor((Math.random()*27) + 1);
+}
+
+const randomMonth =  () => {
+  return  Math.floor((Math.random()*12) + 1);
+}
+
+const randomYear =  () => {
+  return  Math.floor((Math.random()*21) + 1980);
+}
+
+const randomBirthday = async () => {
+  return await `${randomDate()} : ${randomMonth()} : ${randomYear()}`;
+}
+
 const getArtistItem = async (url,countryId,data_id) => {
 
   try {
     let response = await  axios.get(url);
-    let { name, cover, thumbnail, birthday, realname, biography } = response.data.data;
-  
+    let { name, cover, thumbnail, realname, biography } = response.data.data;
+
     let newArtist =  new Artist({
       data_id,
       fullName: realname.trim(),
       nickName: name.trim() ,
       thumbnail,
       avatar: cover, 
-      dob: birthday, 
       country: [countryId], 
-      history: biography, 
+      story: biography, 
       songs:[]
     });
 

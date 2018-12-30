@@ -14,26 +14,27 @@ module.exports = async (request, response) => {
     history 
   } = request.body;
 
+  dob = (new Date(dob)).getTime();
   gender = parseInt(gender);
 
   let countryId = [];
-
+  
   country.forEach(element => countryId.push(element.value));  
 
   let newArtist;
 
   let data_id = await ObjId.find({});
-  let artistId = data[0].artistId;
+  let artistId = data_id[0].artistId;
   artistId  = generateObjId(artistId);
 
   if(isEmpty(thumbnail) && !isEmpty(avatar) ) 
-    newArtist = new Artist({data_id: artistId,fullName,nickName,gender, dob,avatar, country: countryId, history, songs:[] });
+    newArtist = new Artist({data_id: artistId,fullName,nickName,gender, dob,avatar, country: countryId, story:history, songs:[] });
   else if(isEmpty(avatar) && !isEmpty(thumbnail)) 
-    newArtist = new Artist({data_id: artistId,fullName,nickName,gender, dob,thumbnail, country: countryId, history, songs:[] });
+    newArtist = new Artist({data_id: artistId,fullName,nickName,gender, dob,thumbnail, country: countryId, story:history, songs:[] });
   else if(!isEmpty(avatar) && !isEmpty(thumbnail)) 
-    newArtist = new Artist({data_id: artistId,fullName,nickName,gender,thumbnail,avatar, dob, country: countryId, history, songs:[] });
+    newArtist = new Artist({data_id: artistId,fullName,nickName,gender,thumbnail,avatar, dob, country: countryId, story:history, songs:[] });
   else 
-    newArtist = new Artist({data_id,fullName,nickName,gender, dob, country: countryId, history, songs:[] });
+    newArtist = new Artist({data_id:artistId,fullName,nickName,gender, dob, country: countryId, story:history, songs:[] });
 
   let artistdata = await newArtist.save(); 
   

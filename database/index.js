@@ -175,16 +175,22 @@ const ArtistSchema = new mongoose.Schema({
     required: false
   },
   dob: { // date of birth
-    type: String,
-    default: '01/01/1990', // 01/01/1990
-    required: false
+    type: Number,
+    required: false,
+    default: (new Date("01-01-1990")).getTime()
   },
   country: [],
   story: {
     type: String,
     required: false
   },
-  songs: []
+  songs: [],
+  follower: [],
+  followCount: {
+    type: Number,
+    required: false,
+    default: 0
+  }
   
 },{collection: 'artist'}); // prevent 'song' collection transform to 'songs'
 
