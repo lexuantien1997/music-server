@@ -3,7 +3,7 @@ const  decryptAlias = require('./decrypt.alias');
 
 // this is search for song:
 // http://localhost:5000/search/q=c&media?cAt=12-12-2018&cType=0&vCount=38960381&vType=1
-module.exports = async (req,res) => {
+module.exports = (req,res) => {
   let { 
     q, // name
     cAt,cType, // date create and type: 0:less | 1: equal | 2: greater
@@ -103,6 +103,8 @@ module.exports = async (req,res) => {
     duration: durationCond,
     typeSong: tagCond
   }).then(data => res.status(200).json({
+    err: null,
+    msg: "Success",
     count: data.length,
     data
   }));
