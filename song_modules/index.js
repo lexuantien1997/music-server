@@ -541,12 +541,12 @@ router.post("/user-unfollow", (request, response) => {
     }
     else {
       if(user){
-        if(user.follower.includes(uNameFollow)){
-          user.follower.remove(uNameFollow)
+        if(user.following.includes(uNameFollow)){
+          user.following.remove(uNameFollow)
         }
         else{
-          console.log(uNameFollow + " does not contain in follower list")
-          return response.status(200).json({ err: '1', msg: uNameFollow + " does not contain in follower list" });
+          console.log(uNameFollow + " does not contain in following list")
+          return response.status(200).json({ err: '1', msg: uNameFollow + " does not contain in following list" });
         }
         user.save(function (err) {
         if (err) {
@@ -555,13 +555,43 @@ router.post("/user-unfollow", (request, response) => {
         }
         else {
           console.log("Successfully followed: " + uNameFollow)
-          return response.status(200).json({ err: '0', msg: "Successfully unfollowed: " + uNameFollow });
+          Database.User.findOne({userName: uNameFollow}, function(err, userFollow){
+            if(err){
+              LogFindError(err, uNameFollow)
+              return response.status(200).json({ err: '1', msg: "Successfully add following but error when finding user: " + uNameFollow });
+            }
+            else{
+              if(userFollow){
+                if(userFollow.follower.includes(uName)){
+                  userFollow.follower.remove(uName)
+                }
+                else{
+                  console.log(uName + " does not contain in follower list")
+                  return response.status(200).json({ err: '1', msg: uName + " does not contain in follower list" });
+                }
+                userFollow.save(function(err){
+                  if (err) {
+                    console.log("Successfully removed following but failed to remove follower to: " + uNameFollow)
+                    return response.status(200).json({ err: '1', msg: "Successfully removed following but failed to removed follower to: " + uNameFollow });
+                  }
+                  else {
+                    console.log("Successfully removed following and Successfully removed follower to: " + uNameFollow)
+                    response.status(200).json({ err: '0', msg: "Successfully removed following and Successfully removed follower to: " + uNameFollow });
+                  }
+                })
+              }
+              else{
+                console.log("Cannot find user to add follower: " + uName + " " + uNameFollow)
+                return response.status(200).json({ err: '1', msg: "Cannot find user to add follower: " + uName + " " + uNameFollow });
+              }
+            }
+          })
         }
       })
       }
       else{
-        console.log("Cannot find user to remove follower: " + uName + " " + uNameFollow)
-        return response.status(200).json({ err: '1', msg: "Cannot find user to remove follower: " + uName + " " + uNameFollow });
+        console.log("Cannot find user to remove following: " + uName + " " + uNameFollow)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to remove following: " + uName + " " + uNameFollow });
       }
     }
   })
