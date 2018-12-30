@@ -11,7 +11,7 @@ module.exports = () => {
             console.log(err)
           }
           else{
-            console.log("Successfully connected to mlab || OFFLINE)
+            console.log("Successfully connected to mlab || OFFLINE")
           }
         }) //process.env.MONGO_OFFLINE ||
   }
