@@ -60,6 +60,25 @@ router.post("/user-sign-up", (request, response) => {
   })
 })
 
+router.post("/user-get-info", (request, response) => {
+  let { uName } = request.body;
+  Database.User.findOne({ userName: uName }, function (err, user) {
+    if (err) {
+      LogFindError(err, uName)
+      return response.status(200).json({ err: '1', msg: "Error when finding user: " + uName });
+    }
+    else {
+      if (user != null) {
+        return response.status(200).json({ err: '0', msg: "Get user info successfully!", acc: user });
+      }
+      else {
+        console.log("Cannot find user to get info: " + uName)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to get info: " + uName });
+      }
+    }
+  })
+})
+
 router.post("/user-change-password", (request, response) => {
   let { uName, newPassword } = request.body;
   Database.User.findOne({ userName: uName }, function (err, data) {
@@ -89,6 +108,126 @@ router.post("/user-change-password", (request, response) => {
     }
   })
 });
+
+router.post("/user-change-name", (request, response) => {
+  let { uName, newName } = request.body;
+  Database.User.findOne({ userName: uName }, function (err, user) {
+    if (err) {
+      LogFindError(err, uName)
+      return response.status(200).json({ err: '1', msg: "Error when finding user: " + uName });
+    }
+    else {
+      if (user != null) {
+        // edit password
+        user.name = newName
+        user.save(function (err) {
+          if (err) {
+            console.log("Failed to change user display name: " + uName)
+            return response.status(200).json({ err: '1', msg: "Failed to change user display name: " + uName });
+          }
+          else {
+            console.log("User's display name successfully changed!");
+            return response.status(200).json({ err: '0', msg: "User's display name successfully changed!", acc: user });
+          }
+        })
+      }
+      else {
+        console.log("Cannot find user to change display name: " + uName)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to change display name: " + uName });
+      }
+    }
+  })
+})
+
+router.post("/user-change-DoB", (request, response) => {
+  let { uName, newDoB } = request.body;
+  Database.User.findOne({ userName: uName }, function (err, user) {
+    if (err) {
+      LogFindError(err, uName)
+      return response.status(200).json({ err: '1', msg: "Error when finding user: " + uName });
+    }
+    else {
+      if (user != null) {
+        // edit password
+        user.DoB = newDoB
+        user.save(function (err) {
+          if (err) {
+            console.log("Failed to change user DoB: " + uName)
+            return response.status(200).json({ err: '1', msg: "Failed to change user DoB: " + uName });
+          }
+          else {
+            console.log("User's DoB successfully changed!");
+            return response.status(200).json({ err: '0', msg: "User's DoB successfully changed!", acc: user });
+          }
+        })
+      }
+      else {
+        console.log("Cannot find user to change DoB: " + uName)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to change DoB: " + uName });
+      }
+    }
+  })
+})
+
+router.post("/user-change-phone-number", (request, response) => {
+  let { uName, newPhoneNumber } = request.body;
+  Database.User.findOne({ userName: uName }, function (err, user) {
+    if (err) {
+      LogFindError(err, uName)
+      return response.status(200).json({ err: '1', msg: "Error when finding user: " + uName });
+    }
+    else {
+      if (user != null) {
+        // edit password
+        user.phoneNumber = newPhoneNumber
+        user.save(function (err) {
+          if (err) {
+            console.log("Failed to change user phone number: " + uName)
+            return response.status(200).json({ err: '1', msg: "Failed to change user phone number: " + uName });
+          }
+          else {
+            console.log("User's phone numer successfully changed!");
+            return response.status(200).json({ err: '0', msg: "User's phone number successfully changed!", acc: user });
+          }
+        })
+      }
+      else {
+        console.log("Cannot find user to change phone number: " + uName)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to change phone number: " + uName });
+      }
+    }
+  })
+})
+
+router.post("/user-change-address", (request, response) => {
+  let { uName, newAddress } = request.body;
+  Database.User.findOne({ userName: uName }, function (err, user) {
+    if (err) {
+      LogFindError(err, uName)
+      return response.status(200).json({ err: '1', msg: "Error when finding user: " + uName });
+    }
+    else {
+      if (user != null) {
+        // edit password
+        user.address = newAddress
+        user.save(function (err) {
+          if (err) {
+            console.log("Failed to change user address: " + uName)
+            return response.status(200).json({ err: '1', msg: "Failed to change user address: " + uName });
+          }
+          else {
+            console.log("User's address successfully changed!");
+            return response.status(200).json({ err: '0', msg: "User's address successfully changed!", acc: user });
+          }
+        })
+      }
+      else {
+        console.log("Cannot find user to change address: " + uName)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to change address: " + uName });
+      }
+    }
+  })
+})
 
 router.post("/user-delete", (request, response) => {
   let { uName } = request.body
@@ -337,12 +476,12 @@ router.post("/user-follow", (request, response) => {
     }
     else {
       if(user){
-        if(!user.follower.includes(uNameFollow)){
-          user.follower.push(uNameFollow)
+        if(!user.following.includes(uNameFollow)){
+          user.following.push(uNameFollow)
         }
         else{
-          console.log(uNameFollow + " has contained in follower list")
-          return response.status(200).json({ err: '1', msg: uNameFollow + " has contained in follower list" });
+          console.log(uNameFollow + " has contained in following list")
+          return response.status(200).json({ err: '1', msg: uNameFollow + " has contained in following list" });
         }
         user.save(function (err) {
         if (err) {
@@ -351,13 +490,43 @@ router.post("/user-follow", (request, response) => {
         }
         else {
           console.log("Successfully followed: " + uNameFollow)
-          return response.status(200).json({ err: '0', msg: "Successfully followed: " + uNameFollow });
+          Database.User.findOne({userName: uNameFollow}, function(err, userFollow){
+            if(err){
+              LogFindError(err, uNameFollow)
+              return response.status(200).json({ err: '1', msg: "Successfully add following but error when finding user: " + uNameFollow });
+            }
+            else{
+              if(userFollow){
+                if(!userFollow.follower.includes(uName)){
+                  userFollow.follower.push(uName)
+                }
+                else{
+                  console.log(uName + " has contained in follower list")
+                  return response.status(200).json({ err: '1', msg: uName + " has contained in follower list" });
+                }
+                userFollow.save(function(err){
+                  if (err) {
+                    console.log("Successfully add following but failed to add follower to: " + uNameFollow)
+                    return response.status(200).json({ err: '1', msg: "Successfully add following but failed to add follower to: " + uNameFollow });
+                  }
+                  else {
+                    console.log("Successfully add following and Successfully added follower to: " + uNameFollow)
+                    response.status(200).json({ err: '0', msg: "Successfully add following and Successfully added follower to: " + uNameFollow });
+                  }
+                })
+              }
+              else{
+                console.log("Cannot find user to add follower: " + uName + " " + uNameFollow)
+                return response.status(200).json({ err: '1', msg: "Cannot find user to add follower: " + uName + " " + uNameFollow });
+              }
+            }
+          })
         }
       })
       }
       else{
-        console.log("Cannot find user to add follower: " + uName + " " + uNameFollow)
-        return response.status(200).json({ err: '1', msg: "Cannot find user to add follower: " + uName + " " + uNameFollow });
+        console.log("Cannot find user to add following: " + uName + " " + uNameFollow)
+        return response.status(200).json({ err: '1', msg: "Cannot find user to add following: " + uName + " " + uNameFollow });
       }
     }
   })
