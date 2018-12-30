@@ -230,6 +230,22 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: ""
   },
+  name:{
+    type: String,
+    default: "",
+  },
+  DoB:{
+    type: String,
+    default: "01/01/1990"
+  },
+  phoneNumber:{
+    type: String,
+    default: "",
+  },
+  address:{
+    type: String,
+    default: "",
+  },
   friends:{
     type: Array,
   },
