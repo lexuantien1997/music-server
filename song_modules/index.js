@@ -1,33 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const Database = require("../database")
-const genareteId = require("../admin_modules/server-backend/generate-Id")
+const generateId = require("../admin_modules/server-backend/generate-Id")
 
 function LogFindError(err, uName) {
   console.log("Error when finding user: " + uName)
   console.log(err)
 }
 
-router.post("/user-sign-up", (request, response) => {
-  let id = 'US0000'
-  Database.User.find({}, function (err, users) {
-    console.log("start find all")
-    if (err) {
-      console.log("Error when finding all user")
-      console.log(err)
-      return response.status(200).json({ err: '1', msg: "Error when finding all user" });
-    }
-    else {
-      console.log(users)
-      console.log(users == [])
-      console.log(users === [])
-      if (users.length != 0) {
-        id = users[users.length - 1].userId
-        console.log("get lastest id: " + id)
-      }
-    }
-  })
+router.post("/test-id", async (request, response) => {
+  let data_id =  await Database.ObjId.find({});
+  let id = data_id[0].userId;
+  console.log("current id: " + id)
+  id  = generateId(id);
+  console.log("new id: " + id)
+})
+
+router.post("/user-sign-up", async (request, response) => {
   let { uName, pass } = request.body;
+
+  let data_id =  await Database.ObjId.find({});
+  let id = data_id[0].userId;
+  console.log("current id: " + id)
+  id  = generateId(id);
+  console.log("new id: " + id)
 
   Database.User.findOne({ userName: uName }, function (err, data) {
     if (err) {
@@ -37,7 +33,7 @@ router.post("/user-sign-up", (request, response) => {
     else {
       if (data == null) {
         let user = new Database.User({
-          userId: genareteId(id),
+          userId: id,
           userName: uName,
           password: pass,
         })
@@ -48,6 +44,8 @@ router.post("/user-sign-up", (request, response) => {
             console.log(err)
             return response.status(200).json({ err: '1', msg: "Save user error: " + user });
           }
+          data_id[0].set({ userId: id });
+          data_id[0].save((err, updateddata) => console.log(updateddata));
           return response.status(200).json({ err: '0', msg: "Account successfully created" }); //err_code == 0 means none error
         });
       }
