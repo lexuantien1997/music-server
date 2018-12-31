@@ -7,7 +7,7 @@ const checkUserLike = async (data, userId) => {
   if(userId == null) return data;
   for(let r of data) {
     let checkLike = await Song.findOne({data_id: r.data_id,userLike: { $in: [userId] }});
-    if(checkLike != null) r.userLike.push(userId);
+    if(checkLike != null) r.isUserLike = true;
   }
   return data;
 }
@@ -36,7 +36,7 @@ module.exports = (req,res) => {
   if(t2m_id == null) { // not login
 
   } else { // login -> jwt to decrypt response something like follow, search
-    t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN);
+    // t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN).userId;
   }
   
 
@@ -119,7 +119,7 @@ module.exports = (req,res) => {
     tagCond = { $in: tag}
   }
 
-  Song.find({
+  let regexSearch = {
     name: {
       $regex: `(?i)\w*${q}`, // regex uppercase and lowercase maybe
       $options: 'g'
@@ -130,16 +130,22 @@ module.exports = (req,res) => {
     downloadCount: dCountCond,
     duration: durationCond,
     typeSong: tagCond
-  },
-  {
-    userLike: {
-      $slice: 0
-    }
-  })
-  .select("-idUserUpload -audio -download -duration")
-  .sort({data_id:-1}) // sort from newest 2 oldest
-  .skip(page) // skip some data -> pagination
-  .limit(7)
-  .then(data => checkUserLike(data,t2m_id.userId))
-  .then(data => res.status(200).json({ err: null,msg: "Success",count: data.length, data }));
+  }
+
+  let projection = {
+    // userLike: {
+    //   $slice: 0
+    // }
+  }
+
+  Song
+    .find(regexSearch,projection)
+    .select("-idUserUpload -audio._320 -audio.lossless -__v -download -duration")
+    .sort({data_id:-1}) // sort from newest 2 oldest
+    .skip(page) // skip some data -> pagination
+    .limit(7)
+    .lean() // make high performance query
+    .then(data => checkUserLike(data,t2m_id))
+    .then(data => res.status(200).json({ err: null,msg: "Success",count: data.length, data }));
+  
 }

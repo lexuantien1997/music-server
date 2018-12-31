@@ -4,13 +4,17 @@ require("dotenv").config();
 
 const checkUserFollow = async (data, userId) => {
   if(userId == null) return data;
+  // let newData = [];
   for(let r of data) {
     let checkFollow = await Artist.findOne({data_id: r.data_id,"follower.user_id": { $in: [userId] }});
     if(checkFollow != null) {      
-      let follower = r.follower;
-      let count = 0;
-      for (let i = 0;  i< follower.length && follower[i].user_id != userId; i++) count ++;
-      if(count == follower.length) r.follower.push({ user_id: userId });
+      r.isFollow = true;
+      // console.log(r);
+      // newData.push(r);
+      // let follower = r.follower;
+      // let count = 0;
+      // for (let i = 0;  i< follower.length && follower[i].user_id != userId; i++) count ++;
+      // if(count == follower.length) r.follower.push({ user_id: userId });
     }    
   }
   return data;
@@ -34,7 +38,7 @@ module.exports = (req,res) => {
   if(t2m_id == null) { // not login
 
   } else { // login -> jwt to decrypt response something like follow, search
-    t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN);
+    // t2m_id = jwt.verify(t2m_id,process.env.JWT_LOGIN_TOKEN).userId;
   }
 
   console.log("artist search query",req.query);
@@ -79,7 +83,7 @@ module.exports = (req,res) => {
   let countryCond = { $nin: [] }  ;
   if(country != null) countryCond = { $in: country}
 
-  Artist.find({
+  let regexSearch = {
     nickName: {
       $regex: `(?i)\w*${q}`, // regex uppercase and lowercase maybe
       $options: 'g'
@@ -92,18 +96,23 @@ module.exports = (req,res) => {
     gender,
     country: countryCond,
     followCount: fCountCond
-  }, {
+  }
+
+  let projection = {
     follower: { // just get 4 user follow
       $slice: 4
     },
     songs: {
       $slice: 3 // get example 3 song (id and name)
     }    
-  })
-  .select("-gender -fullName -dob -avatar -_id -story") // exclude song, _id, follower => get all field
+  }
+
+  Artist.find(regexSearch, projection)
+  .select("-gender -fullName -dob -avatar -__v -_id -story") // exclude song, _id, follower => get all field
   .sort({data_id:-1}) // sort from newest 2 oldest
   .skip(page) // skip some data -> pagination
   .limit(7) // only get 7 data
-  .then(data => checkUserFollow(data,t2m_id.userId)) // add user follow -> last items of follow is user
+  .lean()
+  .then(data => checkUserFollow(data,t2m_id)) // add user follow -> last items of follow is user
   .then(data => res.status(200).json({ err: null,msg: "Success", count: data.length,data})); // response data
 }

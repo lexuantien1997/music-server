@@ -15,3 +15,10 @@ module.exports = () => {
       }
     }) //process.env.MONGO_OFFLINE ||
 }
+
+// search
+// top 100 ? ez
+// song view count ? ez
+// song download, download count ? ez
+// song like count , user like? ez
+// artist follow ? ez
